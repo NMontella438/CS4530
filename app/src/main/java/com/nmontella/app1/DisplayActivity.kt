@@ -38,9 +38,16 @@ class DisplayActivity : AppCompatActivity(), View.OnClickListener {
         restartButton!!.setOnClickListener(this)
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        fullName = savedInstanceState.getString("full_name")
+        profilePic = savedInstanceState.getParcelable("profile_pic", Bitmap::class.java)
+    }
     override fun onSaveInstanceState(outState: Bundle){
         super.onSaveInstanceState(outState)
         outState.putString("full_name", fullName)
+        outState.putParcelable("profile_pic", profilePic)
     }
     override fun onClick(p0: View?) {
         val mainIntent = Intent(this@DisplayActivity, MainActivity::class.java)

@@ -88,9 +88,15 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 lastName = etLastName!!.text.toString()
 
                 if(firstName.isNullOrBlank() || lastName.isNullOrBlank()){
-                    Toast.makeText(this@MainActivity, "Enter a First and Last Name", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@MainActivity, "Enter a first and last name", Toast.LENGTH_SHORT).show()
                 }
-                else if(!picView!!.isShown){
+                else if(firstName!!.split("\\s+".toRegex()).toTypedArray().size != 1){
+                    Toast.makeText(this@MainActivity, "Enter only one first name", Toast.LENGTH_SHORT).show()
+                }
+                else if(lastName!!.split("\\s+".toRegex()).toTypedArray().size != 1){
+                    Toast.makeText(this@MainActivity, "Enter only one last name", Toast.LENGTH_SHORT).show()
+                }
+                else if(profilePic == null){
                     Toast.makeText(this@MainActivity, "Take profile picture before submitting", Toast.LENGTH_SHORT).show()
                 }
                 else {
