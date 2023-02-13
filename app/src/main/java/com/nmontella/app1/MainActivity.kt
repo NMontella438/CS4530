@@ -3,6 +3,8 @@ package com.nmontella.app1
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.media.Image
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +12,7 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
+import java.io.ByteArrayOutputStream
 
 class MainActivity : AppCompatActivity(), View.OnClickListener {
     //Data Variables
@@ -17,7 +20,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var firstName: String? = null
     private var midName: String? = null
     private var lastName: String? = null
-    private var nameSubmit: Boolean? = false
 
     //UI Variables
     private var buttonSubmit: Button? = null
@@ -29,6 +31,12 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private var picView: ImageView? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if(savedInstanceState != null){
+            firstName = savedInstanceState.getString("first_name")
+            midName = savedInstanceState.getString("mid_name")
+            lastName = savedInstanceState.getString("last_name")
+        }
         setContentView(R.layout.activity_main)
 
         etFirstName = findViewById(R.id.et_firstName)
@@ -44,8 +52,11 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     }
 
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("first_name", firstName)
+        outState.putString("mid_name", midName)
+        outState.putString("last_name", lastName)
     }
     override fun onClick(view: View) {
         when(view.id){
@@ -63,9 +74,19 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 if(firstName.isNullOrBlank() || lastName.isNullOrBlank()){
                     Toast.makeText(this@MainActivity, "Enter a First and Last Name", Toast.LENGTH_SHORT).show()
                 }
+                else if(!picView!!.isShown){
+                    Toast.makeText(this@MainActivity, "Take profile picture before submitting", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    fullName = firstName.plus(" ").plus(lastName)
 
-                fullName = firstName.plus(" ").plus(midName).plus(" ").plus(lastName)
-                nameSubmit = true
+                    val displayIntent = Intent(this@MainActivity, DisplayActivity::class.java)
+                    val bundle = Bundle()
+                    bundle.putString("full_name", fullName)
+                    picView
+                    displayIntent.putExtras(bundle)
+                    startActivity(displayIntent)
+                }
             }
             R.id.button_picture -> {
                 val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
