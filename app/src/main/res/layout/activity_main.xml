@@ -10,7 +10,7 @@
         android:id="@+id/fNameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@id/image_layout"
         android:padding="8dp"
         >
@@ -29,7 +29,7 @@
         android:id="@+id/mNameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@id/fNameLayout"
         android:padding="8dp"
         >
@@ -48,7 +48,7 @@
         android:id="@+id/lNameLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@id/mNameLayout"
         android:padding="8dp"
         >
@@ -81,7 +81,7 @@
             android:id="@+id/button_picture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Upload Profile Picture"/>
+            android:text="@string/upload_profpic"/>
         <Button
             android:id="@+id/button_submit"
             android:layout_width="wrap_content"

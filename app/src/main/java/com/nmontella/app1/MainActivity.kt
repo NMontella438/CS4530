@@ -115,7 +115,7 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
                 try{
                     cameraActivity.launch(cameraIntent)
                 }catch(ex: ActivityNotFoundException){
-                    //Do error handling here
+                    Toast.makeText(this@MainActivity, "Camera Error", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -123,8 +123,6 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
     private val cameraActivity = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){result ->
         if(result.resultCode == RESULT_OK) {
             picView = findViewById<View>(R.id.pictureView) as ImageView
-            //val extras = result.data!!.extras
-            //val thumbnailImage = extras!!["data"] as Bitmap?
 
             if (Build.VERSION.SDK_INT >= 33) {
                 val thumbnailImage = result.data!!.getParcelableExtra("data", Bitmap::class.java)
